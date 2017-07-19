@@ -4,17 +4,20 @@ import numpy as np
 import ccdproc as ccd
 
 
-## General Reduction process:
+# General Reduction process:
 #   1.) Avg Bias frames
-#   do I just read each fits file and and
+
 #   2.) Subtract avg bias from flat
 #       - Normalize each flat to 1.0
+
 #   3.) Median/ avg flat for each filter
 #       - Normalize avg flats to 1
+
 #   4.) Suntract Bias from object images
+
 #   5.) Divide image by flat field.
 
-path = '/Users/JPeg/umdastrodata/20170617/'
+path  = '/Users/JPeg/umdastrodata/20170617/'
 count = 0
 
 
@@ -40,10 +43,12 @@ for img in all_bias:
     img_sum = img_sum + img
     average = img_sum/len(all_bias)
 
-print(all_bias.shape) # assert: should be (3128,3080)
-    
+master_bias = average
+
+print(all_bias.shape)  # assert: should be (3128,3080)
+
 # Image of C/2015 OI PanSTARRS pos3
-#image = ccd.CCDData.read('/Users/JPeg/code_abode/ipynb/lmi.0200.fits')
+# image = ccd.CCDData.read('/Users/JPeg/code_abode/ipynb/lmi.0200.fits')
 
 # Several functions exist within ccdproc.CCDData to perform general reduction
 # pipeline procedures
