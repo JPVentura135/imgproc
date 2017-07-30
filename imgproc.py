@@ -13,7 +13,7 @@ import ccdproc as ccd
 #   3.) Median/ avg flat for each filter
 #       - Normalize avg flats to 1
 
-#   4.) Suntract Bias from object images
+#   4.) Subtract Bias from object images
 
 #   5.) Divide image by flat field.
 
