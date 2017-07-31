@@ -18,37 +18,49 @@ import ccdproc as ccd
 #   5.) Divide image by flat field.
 
 path  = '/Users/JPeg/umdastrodata/20170617/'
-count = 0
 
 
-# create bias frame from files of correct dimensions (not subframe) in path:
+# Create list of bias frame filenames.
 
-bias_set1 = [fits.getdata(path + 'lmi.00%d.fits'  %n) for n in    range(10,41)]
+bias_set1 = [(path + 'lmi.00%d.fits'  %n) for n in    range(21,41)]
 
-for i in bias_set1:
-    print(i.shape)
+#for i in bias_set1:
+    #print(i.shape)
 
-bias_set2 = [fits.getdata(path + 'lmi.0%d.fits'   %n) for n in  range(327,337)]
 
-for j in bias_set2:
-    print(j.shape)
+bias_set2 = [(path + 'lmi.0%d.fits'   %n) for n in  range(327,337)]
 
-# add all bias images to be able to take the mean and obtain the master bias.
-all_bias = np.mean(bias_set1 + bias_set2)
+#for j in bias_set2:
+    #print(j.shape)
 
-img_sum = 0
-average = 0
+# Assert: bias frames must have equal dimentions.
 
-for img in all_bias:
-    img_sum = img_sum + img
-    average = img_sum/len(all_bias)
 
-master_bias = average
+# concatenate component lists.
 
-print(all_bias.shape)  # assert: should be (3128,3080)
+all_bias = bias_set1 + bias_set2
 
-# Image of C/2015 OI PanSTARRS pos3
-# image = ccd.CCDData.read('/Users/JPeg/code_abode/ipynb/lmi.0200.fits')
+# Create master-bias image by combining bias images and taking the mean. **ccdproc admits a list of fits files. output file must be .fits else error.
 
-# Several functions exist within ccdproc.CCDData to perform general reduction
-# pipeline procedures
+mbias_avg = ccd.combine(all_bias, output_file = path + 'jp_mbias_avg.fits', method = 'average')
+
+
+# Create average flat for each filter:
+
+flatlist_OH = [(path + 'lmi.00%d.fits' %n) for n in range(41,51)]
+
+flat_set_NH = [(path + 'lmi.00%d.fits' %n) for n in range(51,62)]
+
+flat_set_UC = [(path + 'lmi.00%d.fits' %n) for n in range(62,73)]
+
+flat_set_CN = [(path + 'lmi.00%d.fits' %n) for n in range(73,84)]
+
+flat_set_BC = [(path + 'lmi.00%d.fits' %n) for n in range(84,95)]
+
+flat_set_RC = [(path + 'lmi.00%d.fits' %n) for n in range(95,100)] + [(path + 'lmi.0%d.fits' %n) for n in range(100,106)]
+
+flat_set_C2 = [(path + 'lmi.0%d.fits' %n) for n in range(106,117)]
+
+flat_set_SDSS_R = [(path + 'lmi.0%d.fits' %n) for n in range(117,129)]
+
+flat_set_SDSS_G = [(path + 'lmi.0%d.fits' %n) for n in range(129,142)]
