@@ -103,7 +103,7 @@ master_flat_RC = cp.combine(flatlist_RC,method='average')
 master_flat_RC.write('master_flat_RC_avg.fits')
 
 flatlist_C2     = []
-for filename in allfiles.files_filtered(OBSTYPE='SKY FLAT',FILTERS='C2'):
+for filename in allfiles.files_filtßered(OBSTYPE='SKY FLAT',FILTERS='C2'):
     ccd = fits.getdata(allfiles.location + filename)
     ccd = cp.CCDData(ccd, unit = u.adu)
     ccd = cp.subtract_overscan(ccd,overscan_axis=1,overscan = ccd[:,3099:3125])
