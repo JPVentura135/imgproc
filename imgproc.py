@@ -81,7 +81,7 @@ flatlist_SDSS_G = [(path + 'lmi.0%d.fits' %n) for n in range(129,142)]
 # Subtract mbias from flat images in flat lists
 #  subtract_bias() passes by reference -> alters original files!
 #  make sure to account for which ones have been operated on via comments or
-#  ccdproc.somefunction(add_keyword='mbias subtracted flat')
+#  ccdproc.<somefunction>(add_keyword='mbias subtracted flat')
 #                       ^^^^^^^^^^^
 for flat in flatlist_OH:
      ccd.subtract_bias(ccd.CCDData(fits.getdata(flat),unit='adu'),ccd.CCDData(fits.getdata('jp_mbias_avg.fits'),unit='adu'), add_keyword='mbias subtracted flat_OH')
@@ -121,3 +121,5 @@ for flat in flatlist_SDSS_G:
 ### mbias has now been subtracted from all of the flat filter-images ###
 
 ### Now normalize each flat image to one by dividing by the image mode###
+
+### Then mean_combine() flat lists for each respective filter.

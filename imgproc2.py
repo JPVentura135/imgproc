@@ -3,7 +3,7 @@ from   astropy.io import fits
 import matplotlib.pyplot as plt
 import ccdproc as cp
 
-
+# The path listed below is for the directory on ShadowHQ not local.
 path      = '/Users/JPeg/cometdata/'
 
 fileKeys  = ['FILENAME','NAXIS1','NAXIS2','OBJECT','OBSTYPE', 'FILTERS' ]
